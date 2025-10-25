@@ -1,6 +1,7 @@
 // app/api/contact/route.ts
 import { NextResponse } from "next/server";
-import { getDB } from "@/lib/mongodb";
+import { connectDB } from "@/lib/mongodb";
+
 import validator from "validator";
 import nodemailer from "nodemailer";
 
@@ -62,7 +63,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Message required" }, { status: 400 });
     }
 
-    const db = await getDB();
+    const db = await connectDB();
     const doc = {
       firstName: body.firstName.trim(),
       lastName: body.lastName.trim(),

@@ -1,17 +1,31 @@
-// app/api/submissions/[id]/route.ts
 import { NextResponse } from "next/server";
-import { getDB } from "@/lib/mongodb";
+import mongoose from "mongoose";
 import Submission from "@/app/models/Submission";
+import { connectDB } from "@/lib/mongodb";
 
-export async function DELETE(req: Request, { params }: { params: { id: string } }) {
+export async function DELETE(req: Request, context: { params: Promise<{ id: string }> }) {
   try {
-    await getDB();
-    await Submission.findByIdAndDelete(params.id);
+    // ✅ Unwrap the params promise properly
+    const { id } = await context.params;
+
+    await connectDB();
+
+    // ✅ Validate ID format
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return NextResponse.json({ error: "Invalid ID format" }, { status: 400 });
+    }
+
+    // ✅ Try deleting
+    const deleted = await Submission.findByIdAndDelete(id);
+    if (!deleted) {
+      return NextResponse.json({ error: "Submission not found" }, { status: 404 });
+    }
+
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error("Delete error:", error);
+    console.error("DELETE error:", error);
     return NextResponse.json(
-      { error: (error as Error).message },
+      { error: "Failed to delete submission" },
       { status: 500 }
     );
   }

@@ -1,7 +1,5 @@
 "use client";
 
-export const dynamic = "force-dynamic";
-
 import { useState, useEffect } from "react";
 import { format } from "date-fns";
 import Link from "next/link";
@@ -16,6 +14,8 @@ type Submission = {
   createdAt: string;
 };
 
+export const dynamic = "force-dynamic";
+
 export default function SubmissionsPage() {
   const [submissions, setSubmissions] = useState<Submission[]>([]);
   const [loading, setLoading] = useState(true);
@@ -23,12 +23,13 @@ export default function SubmissionsPage() {
   const [deleting, setDeleting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Fetch submissions
+  // 🧩 Fetch submissions
   useEffect(() => {
     const fetchSubmissions = async () => {
       try {
-        const res = await fetch("/api/submissions");
+        const res = await fetch("/api/submissions", { cache: "no-store" });
         if (!res.ok) throw new Error("Failed to fetch submissions");
+
         const data = await res.json();
 
         const formatted = data.map((s: any) => ({
@@ -39,8 +40,9 @@ export default function SubmissionsPage() {
         }));
 
         setSubmissions(formatted);
-      } catch (err) {
+      } catch (err: any) {
         console.error("Error fetching submissions:", err);
+        setError("Server error while loading submissions.");
       } finally {
         setLoading(false);
       }
@@ -49,28 +51,32 @@ export default function SubmissionsPage() {
     fetchSubmissions();
   }, []);
 
-  // Confirm modal open
+  // 🧩 Handle delete button click
   const handleDelete = (id: string) => {
     setConfirmDeleteId(id);
   };
 
-  // Delete API call
+  // 🧩 Confirm delete
   const confirmDelete = async () => {
     if (!confirmDeleteId) return;
     setDeleting(true);
     setError(null);
 
     try {
+      console.log("Deleting ID:", confirmDeleteId); // 🪶 Debug check
+
       const res = await fetch(`/api/submissions/${confirmDeleteId}`, {
         method: "DELETE",
       });
 
+      const responseData = await res.json();
+      console.log("Delete response:", responseData);
+
       if (!res.ok) {
-        const errText = await res.text();
-        throw new Error(errText || "Failed to delete submission");
+        throw new Error(responseData.error || "Failed to delete submission");
       }
 
-      // Remove deleted record from UI
+      // ✅ Remove deleted record from UI
       setSubmissions((prev) =>
         prev.filter((item) => item._id !== confirmDeleteId)
       );
@@ -101,7 +107,6 @@ export default function SubmissionsPage() {
       {/* Navbar */}
       <nav className="bg-[#fafafa] shadow-md sticky top-0 z-40">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center px-4 sm:px-6 py-3 gap-3 md:gap-0">
-          {/* Left - Logo */}
           <Link href="/" target="_blank">
             <div className="flex justify-center md:justify-start w-full md:w-auto">
               <img
@@ -112,12 +117,10 @@ export default function SubmissionsPage() {
             </div>
           </Link>
 
-          {/* Center - Title */}
           <h1 className="text-2xl sm:text-3xl font-poppins text-[#5b2d91] font-semibold text-center">
             ADMIN DASHBOARD
           </h1>
 
-          {/* Right - Version */}
           <div className="text-sm text-gray-600 opacity-80 md:pr-6 hidden sm:block">
             v1.0
           </div>
@@ -136,6 +139,12 @@ export default function SubmissionsPage() {
             </span>
           </div>
 
+          {error && (
+            <div className="bg-red-100 text-red-600 p-3 rounded-md mb-4 text-sm">
+              {error}
+            </div>
+          )}
+
           {submissions.length === 0 ? (
             <div className="text-center py-16 text-gray-500">
               <p className="text-lg">No submissions yet.</p>
@@ -145,13 +154,27 @@ export default function SubmissionsPage() {
               <table className="min-w-full text-sm sm:text-base table-fixed">
                 <thead className="bg-gray-100/80 font-poppins uppercase ">
                   <tr>
-                    <th className="w-12 sm:w-16 py-3 px-3 sm:px-4 text-left font-medium">#</th>
-                    <th className="w-40 py-3 px-3 sm:px-4 text-left font-medium">Date</th>
-                    <th className="w-40 py-3 px-3 sm:px-4 text-left font-medium">Name</th>
-                    <th className="w-48 py-3 px-3 sm:px-4 text-left font-medium">Email</th>
-                    <th className="w-32 py-3 px-3 sm:px-4 text-left font-medium">Phone</th>
-                    <th className="w-[400px] py-3 px-3 sm:px-4 text-left font-medium">Message</th>
-                    <th className="w-24 py-3 px-3 sm:px-4 text-center font-medium">Action</th>
+                    <th className="w-12 sm:w-16 py-3 px-3 sm:px-4 text-left font-medium">
+                      #
+                    </th>
+                    <th className="w-40 py-3 px-3 sm:px-4 text-left font-medium">
+                      Date
+                    </th>
+                    <th className="w-40 py-3 px-3 sm:px-4 text-left font-medium">
+                      Name
+                    </th>
+                    <th className="w-48 py-3 px-3 sm:px-4 text-left font-medium">
+                      Email
+                    </th>
+                    <th className="w-32 py-3 px-3 sm:px-4 text-left font-medium">
+                      Phone
+                    </th>
+                    <th className="w-[400px] py-3 px-3 sm:px-4 text-left font-medium">
+                      Message
+                    </th>
+                    <th className="w-24 py-3 px-3 sm:px-4 text-center font-medium">
+                      Action
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -162,7 +185,9 @@ export default function SubmissionsPage() {
                         i % 2 === 0 ? "bg-white" : "bg-gray-50/50"
                       }`}
                     >
-                      <td className="py-3 px-3 sm:px-4 text-gray-600">{i + 1}</td>
+                      <td className="py-3 px-3 sm:px-4 text-gray-600">
+                        {i + 1}
+                      </td>
                       <td className="py-3 px-3 sm:px-4 text-gray-600 whitespace-nowrap">
                         {s.createdAt}
                       </td>
@@ -170,16 +195,13 @@ export default function SubmissionsPage() {
                         {s.firstName} {s.lastName}
                       </td>
                       <td className="py-3 px-3 sm:px-4 text-blue-600 hover:underline truncate">
-                        <a
-                          href={`mailto:${s.email}`}
-                          className="block max-w-[180px] truncate"
-                        >
-                          {s.email}
-                        </a>
+                        <a href={`mailto:${s.email}`}>{s.email}</a>
                       </td>
-                      <td className="py-3 px-3 sm:px-4 text-gray-700">{s.phone}</td>
+                      <td className="py-3 px-3 sm:px-4 text-gray-700">
+                        {s.phone}
+                      </td>
                       <td className="py-3 px-3 sm:px-4 text-gray-700 max-w-[400px] overflow-hidden text-ellipsis break-words">
-                        <div className="whitespace-pre-wrap break-words">{s.message}</div>
+                        {s.message}
                       </td>
                       <td className="py-3 px-3 sm:px-4 text-center">
                         <button
@@ -198,7 +220,7 @@ export default function SubmissionsPage() {
         </div>
       </main>
 
-      {/* Delete Confirmation Modal */}
+      {/* 🧩 Delete Confirmation Modal */}
       {confirmDeleteId && (
         <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
           <div className="bg-white rounded-xl shadow-xl p-6 w-[90%] sm:w-96 text-center">
@@ -211,10 +233,6 @@ export default function SubmissionsPage() {
                 (This will permanently remove it from the database.)
               </span>
             </p>
-
-            {error && (
-              <p className="text-red-600 text-sm mb-3">{error}</p>
-            )}
 
             <div className="flex justify-center gap-4">
               <button

@@ -1,27 +1,33 @@
-// lib/mongodb.ts
 import mongoose from "mongoose";
 
-const MONGODB_URI = process.env.MONGODB_URI;
+const MONGODB_URI = process.env.MONGODB_URI || "";
 
 if (!MONGODB_URI) {
-  throw new Error("❌ Please define the MONGODB_URI environment variable inside .env.local");
+  throw new Error("❌ MONGODB_URI is not defined in environment variables");
 }
 
-let isConnected = false; // global flag to prevent multiple connections
+// Maintain a cached connection to prevent re-connecting on hot reloads
+let cached = (global as any).mongoose || { conn: null, promise: null };
 
-export async function getDB() {
-  if (isConnected) {
-    return mongoose.connection;
+export async function connectDB() {
+  if (cached.conn) return cached.conn;
+
+  if (!cached.promise) {
+    cached.promise = mongoose
+      .connect(MONGODB_URI, {
+        dbName: "therapycare", // 👈 adjust if your DB has a different name
+        bufferCommands: false,
+      })
+      .then((mongoose) => mongoose);
   }
 
   try {
-    // Use non-null assertion (!) to satisfy TypeScript
-    const conn = await mongoose.connect(MONGODB_URI!);
-    isConnected = true;
-    console.log("✅ Connected to MongoDB");
-    return conn.connection;
-  } catch (error) {
-    console.error("❌ MongoDB connection error:", error);
-    throw error;
+    cached.conn = await cached.promise;
+  } catch (e) {
+    cached.promise = null;
+    throw e;
   }
+
+  (global as any).mongoose = cached;
+  return cached.conn;
 }
