@@ -126,7 +126,7 @@ export default function ContactPage() {
               name="phone"
               value={formData.phone}
               onChange={handleChange}
-              type="number"
+              type="text"
               placeholder="Phone*"
               className="w-full p-3 rounded-lg bg-[#f3f5fa] outline-none focus:ring-2 focus:ring-[#5A3192]"
             />
