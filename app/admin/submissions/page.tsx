@@ -1,6 +1,6 @@
 // app/admin/submissions/page.tsx
+export const dynamic = "force-dynamic"
 import { getDB } from "@/lib/mongodb";
-import Image from "next/image";
 
 type Submission = {
   _id: string;
