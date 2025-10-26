@@ -32,7 +32,7 @@ export default function ServicesPage() {
   ];
 
   return (
-    <section id="services" className="bg-[#F9FAF6] py-20 px-6 md:px-10">
+    <section id="services" className="bg-[#F9FAF6] py-16 px-4 sm:px-8 md:px-10">
       {/* Section Title */}
       <motion.h2
         initial={{ scale: 0.8, opacity: 0 }}
@@ -43,29 +43,28 @@ export default function ServicesPage() {
           damping: 12,
           duration: 0.5,
         }}
-        whileHover={{ scale: 1.05 }}
-        className="text-3xl md:text-[2.5rem] font-bold text-[#5A3192] font-heading mb-14 text-center tracking-tight"
+        className="text-2xl sm:text-3xl md:text-[2.5rem] font-bold text-[#5A3192] font-heading mb-12 text-center tracking-tight"
       >
         What We Offer
       </motion.h2>
 
       {/* Service Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-10 max-w-7xl mx-auto">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
         {services.map((service, index) => (
           <motion.div
             key={index}
-            initial={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: index * 0.2 }}
+            transition={{ duration: 0.6, delay: index * 0.2 }}
             viewport={{ once: true }}
-            className="group bg-[#FCFCF9] rounded-md shadow-sm border border-gray-100 hover:shadow-lg transition-all duration-300 p-6"
+            className="group bg-white rounded-xl shadow-md border border-gray-100 hover:shadow-lg transition-all duration-300 p-5 flex flex-col"
           >
-            {/* Image (Zoom In–Out Effect) */}
-            <div className="relative w-full h-[250px] mb-5 rounded-sm overflow-hidden">
+            {/* Image */}
+            <div className="relative w-full h-[200px] sm:h-[230px] md:h-[250px] mb-5 rounded-lg overflow-hidden">
               <motion.div
                 className="w-full h-full"
                 whileHover={{
-                  scale: [1, 1.1, 1],
+                  scale: [1, 1.05, 1],
                   transition: {
                     duration: 1.2,
                     repeat: Infinity,
@@ -77,24 +76,24 @@ export default function ServicesPage() {
                   src={service.image}
                   alt={service.title}
                   fill
-                  className="object-cover rounded-sm"
+                  className="object-cover rounded-lg"
                 />
               </motion.div>
             </div>
 
             {/* Title */}
-            <h3 className="text-3xl font-extrabold font-sans text-[#1580a3] text-center mb-4 transition-colors duration-300 group-hover:text-[#F74f22]">
+            <h3 className="text-xl sm:text-3xl font-extrabold text-[#1580a3] text-center mb-3 transition-colors duration-300 group-hover:text-[#F74f22]">
               {service.title}
             </h3>
 
             {/* Description */}
-            <p className=" leading-relaxed mb-4 z-40">
+            <p className="text-sm sm:text-base text-gray-700 text-start font-sans mb-3 md:mt-2 ">
               {service.description}
             </p>
 
             {/* Points */}
             {service.points.length > 0 && (
-              <ul className="list-disc list-inside space-y-1">
+              <ul className="list-disc list-inside text-sm sm:text-base text-gray-700 space-y-1 ">
                 {service.points.map((point, i) => (
                   <li key={i}>{point}</li>
                 ))}
