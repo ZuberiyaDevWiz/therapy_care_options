@@ -86,35 +86,41 @@ export default function TestimonialsSection(): JSX.Element {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.4 }}
-            className="mt-10 sm:mt-14 md:mt-20"
+            className="mt-10 sm:mt-14 md:mt-2"
           >
             <h3 className="mt-4 text-xl sm:text-2xl md:text-3xl font-bold italic text-[#5A3192] font-poppins">
               {testimonials[current].name}
             </h3>
-            <p className="mt-3 sm:mt-4 leading-relaxed sm:leading-8 text-sm sm:text-base md:text-lg italic font-poppins px-2 sm:px-6 md:px-10 text-gray-800">
+            <p className="mt-3 sm:mt-4 leading-relaxed sm:leading-8 text-sm sm:text-base md:text-base italic font-poppins px-2 sm:px-6 md:px-10 text-gray-800">
               “{testimonials[current].text}”
             </p>
           </motion.div>
         </AnimatePresence>
 
         {/* Navigation Arrows */}
-        <button
-          onClick={prevTestimonial}
-          aria-label="Previous testimonial"
-          className="absolute left-3 sm:left-6 top-1/2 transform -translate-y-1/2 text-[#135D4B] opacity-70 hover:opacity-100 transition-opacity duration-300"
-        >
-          <ChevronLeft size={28} className="sm:hidden md:inline" />
-          <ChevronLeft size={36} className="hidden sm:inline" />
-        </button>
+     {/* Navigation Arrows */}
+{/* Navigation Arrows */}
+<button
+  onClick={prevTestimonial}
+  aria-label="Previous testimonial"
+  className="absolute left-3 sm:left-6 top-1/2 transform -translate-y-1/2 
+             text-[#135D4B] opacity-100 sm:opacity-0 sm:group-hover:opacity-100 
+             transition-all duration-300 hover:scale-110"
+>
+  <ChevronLeft className="w-7 h-7 sm:w-9 sm:h-9" />
+</button>
 
-        <button
-          onClick={nextTestimonial}
-          aria-label="Next testimonial"
-          className="absolute right-3 sm:right-6 top-1/2 transform -translate-y-1/2 text-[#135D4B] opacity-70 hover:opacity-100 transition-opacity duration-300"
-        >
-          <ChevronRight size={28} className="sm:hidden md:inline" />
-          <ChevronRight size={36} className="hidden sm:inline" />
-        </button>
+<button
+  onClick={nextTestimonial}
+  aria-label="Next testimonial"
+  className="absolute right-3 sm:right-6 top-1/2 transform -translate-y-1/2 
+             text-[#135D4B] opacity-100 sm:opacity-0 sm:group-hover:opacity-100 
+             transition-all duration-300 hover:scale-110"
+>
+  <ChevronRight className="w-7 h-7 sm:w-9 sm:h-9" />
+</button>
+
+
       </div>
     </section>
   );

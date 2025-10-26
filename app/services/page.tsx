@@ -32,7 +32,7 @@ export default function ServicesPage() {
   ];
 
   return (
-    <section id="services" className="bg-[#F9FAF6] py-16 px-4 sm:px-8 md:px-10">
+    <section id="services" className="bg-[#f8f9f4]  py-16 px-4 sm:px-8 md:px-10">
       {/* Section Title */}
       <motion.h2
         initial={{ scale: 0.8, opacity: 0 }}
