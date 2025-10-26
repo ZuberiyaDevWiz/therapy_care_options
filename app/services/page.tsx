@@ -88,7 +88,7 @@ export default function ServicesPage() {
             </h3>
 
             {/* Description */}
-            <p className=" leading-relaxed mb-4">
+            <p className=" leading-relaxed mb-4 z-40">
               {service.description}
             </p>
 
