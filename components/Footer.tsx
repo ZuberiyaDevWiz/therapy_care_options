@@ -49,7 +49,7 @@ export default function Footer(): JSX.Element {
       </div>
 
       {/* --- Bottom Logo --- */}
-      <Link
+      {/* <Link
         href="https://remiah.com/"
         target="_blank"
         className="flex flex-col items-center space-y-1 cursor-pointer"
@@ -61,7 +61,7 @@ export default function Footer(): JSX.Element {
           height={40}
           className="object-contain w-28 sm:w-32 md:w-36"
         />
-      </Link>
+      </Link> */}
     </footer>
   );
 }
