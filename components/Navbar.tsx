@@ -16,6 +16,8 @@ const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const navLinks = [
+    { name: "Home", href: "/" },
+
     { name: "About", href: "#about" },
     { name: "Services", href: "#services" },
     { name: "Contact", href: "#contact" },
@@ -55,11 +57,13 @@ const Navbar = () => {
       {/* --- Main White Navbar --- */}
       <nav className="bg-white py-3 sm:py-4 px-4 sm:px-8 md:px-16 lg:px-40 flex justify-between items-center relative">
         {/* Logo */}
+      <Link href="/">
         <img
           src="/images/therapy_logo.png"
           alt="therapy logo"
           className="w-32 sm:w-36 md:w-40 h-auto"
         />
+      </Link>
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex space-x-8">

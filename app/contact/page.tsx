@@ -161,7 +161,7 @@ export default function ContactPage() {
               type="text"
               placeholder="First Name*"
               required
-              className="w-full p-3 sm:p-4 rounded-lg bg-[#f3f5fa] outline-none focus:ring-2 focus:ring-[#5A3192]"
+                className="w-full p-3 sm:p-4 rounded-lg bg-[#f3f5fa] outline-none focus:ring-2 focus:ring-[#5A3192] text-black placeholder-gray-900 placeholder:font-light"
             />
             <input
               name="lastName"
@@ -170,7 +170,8 @@ export default function ContactPage() {
               type="text"
               placeholder="Last Name*"
               required
-              className="w-full p-3 sm:p-4 rounded-lg bg-[#f3f5fa] outline-none focus:ring-2 focus:ring-[#5A3192]"
+                            className="w-full p-3 sm:p-4 rounded-lg bg-[#f3f5fa] outline-none focus:ring-2 focus:ring-[#5A3192] text-black placeholder-gray-900 placeholder:font-light"
+
             />
           </div>
 
@@ -182,7 +183,8 @@ export default function ContactPage() {
               type="email"
               placeholder="Email Address*"
               required
-              className="w-full p-3 sm:p-4 rounded-lg bg-[#f3f5fa] outline-none focus:ring-2 focus:ring-[#5A3192]"
+                       className="w-full p-3 sm:p-4 rounded-lg bg-[#f3f5fa] outline-none focus:ring-2 focus:ring-[#5A3192] text-black placeholder-gray-900 placeholder:font-light"
+
             />
              <input
               name="phone"
@@ -191,7 +193,8 @@ export default function ContactPage() {
               type="text"
               placeholder="Phone Number*"
               required
-              className="w-full p-3 sm:p-4 rounded-lg bg-[#f3f5fa] outline-none focus:ring-2 focus:ring-[#5A3192]"
+                             className="w-full p-3 sm:p-4 rounded-lg bg-[#f3f5fa] outline-none focus:ring-2 focus:ring-[#5A3192] text-black placeholder-gray-900 placeholder:font-light"
+
             />
           </div>
 
@@ -202,7 +205,8 @@ export default function ContactPage() {
             placeholder="Message*"
             required
             rows={5}
-            className="w-full p-3 sm:p-4 rounded-lg bg-[#f3f5fa] outline-none focus:ring-2 focus:ring-[#5A3192]"
+                     className="w-full p-3 sm:p-4 rounded-lg bg-[#f3f5fa] outline-none focus:ring-2 focus:ring-[#5A3192] text-black placeholder-gray-900 placeholder:font-light"
+
           />
 
           <div className="flex justify-center sm:justify-end">
