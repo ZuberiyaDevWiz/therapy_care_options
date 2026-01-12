@@ -56,7 +56,7 @@ export default function Hero() {
 
         {/* CTA Button */}
         <div className="flex justify-center mt-6 sm:mt-6">
-          <Link href="https://calendly.com/admin-therapycareoptions" target="_blank">
+          <Link href="/" target="_blank">
             <motion.button
               onClick={handleCalendlyClick}
               initial={{ opacity: 0, scale: 0.8 }}
