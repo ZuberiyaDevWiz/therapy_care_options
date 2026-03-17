@@ -5,7 +5,7 @@ import type { NextRequest } from "next/server";
 export function middleware(req: NextRequest) {
   const url = req.nextUrl;
 
-  // Protect only /admin path
+ 
   if (url.pathname.startsWith("/admin")) {
     const auth = req.headers.get("authorization");
     if (!auth) {
