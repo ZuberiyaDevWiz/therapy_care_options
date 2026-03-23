@@ -8,15 +8,15 @@ import ContactPage from "./contact/page";
 
 export default function Home() {
   return (
-    <main className="">
-      <Navbar />
+    <main className="flex justify-center">
+      {/* <Navbar />
       <Hero />
       <About />
       <Services />
       <Testimonials />
       <ContactPage/>
-      <Footer />
-      {/* <h1 className="">APPLICATION ERROR..</h1> */}
+      <Footer /> */}
+      <h1 className="">APPLICATION ERROR..</h1>
     </main>
   );
 }
