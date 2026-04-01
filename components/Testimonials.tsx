@@ -12,7 +12,7 @@ interface Testimonial {
 export default function TestimonialsSection(): JSX.Element {
   const testimonials: Testimonial[] = [
     {
-      name: "Micheal Bailey",
+      name: "Micheal B.",
       text: "Christy is phenomenal and top tier. She attended to my needs thoroughly. I would definitely come back to get treatment if I need it.",
     },
     {
